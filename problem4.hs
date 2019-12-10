@@ -12,13 +12,13 @@ isPalindrome :: Int -> Bool
 isPalindrome n = (show n) == (reverse $ show n)
 
 
-apply x xmin xmax = if xmin <= xmax
-                    then [x*xmax, x, xmax]:(apply x xmin (xmax - 1))
-                    else []
+apply _ [] = []
+apply x (y:ys) = [x*y, x, y]:(apply x ys)
+                 
 
 
 applyCommutative xmin xmax = if xmin <= xmax
-                             then (apply xmax xmin xmax) ++ (applyCommutative xmin (xmax - 1))
+                             then (apply xmax [xmin..xmax]) ++ (applyCommutative xmin (xmax - 1))
                              else []
 
 
