@@ -2,31 +2,32 @@
 -- made from the product of two 2-digit numbers is 9009 = 91 × 99.
 -- Find the largest palindrome made from the product of two 3-digit numbers.
 import Text.Printf
+import Data.List
+import Data.Ord
 
-smallest = 10001 :: Int
-biggest = 999^2 :: Int
-
-digit_count :: Int -> Int
-digit_count n = ceiling $ logBase 10 (fromIntegral n)
-
-
----- Cartesian Product ----
-zipSingle x [] = []
-zipSingle x (y:ys) = (x, y):(zipSingle x ys)
-
-cartesian [] _ = []
-cartesian _ [] = []
-cartesian (x:xs) ys = (zipSingle x ys) ++ cartesian xs ys
----- End Cartesian Product ----
+smallest_factor = 100
+biggest_factor = 999
 
 
+isPalindrome :: Int -> Bool
+isPalindrome n = (show n) == (reverse $ show n)
 
-main = do
-    printf "%i\n" smallest
-    printf "%i\n" biggest
+apply x xmin xmax = if xmin <= xmax
+                    then if isPalindrome number
+                         then [number, x, xmax]:rest_of_the_list
+                         else rest_of_the_list
+                    else []
+                    where number = x * xmax
+                          rest_of_the_list = (apply x xmin (xmax - 1))
 
-    printf "%i\n" (digit_count smallest)
-    printf "%i\n" (digit_count biggest)
-    
-    let c =  cartesian [1..2] [3..4]
-    putStrLn $ show $ c
+
+applyCommutative xmin xmax = if xmin <= xmax
+                             then (apply xmax xmin xmax) ++ (applyCommutative xmin (xmax - 1))
+                             else []
+
+
+
+
+main = do    
+    let c =  applyCommutative smallest_factor biggest_factor
+    putStrLn $ show $ maximumBy (comparing head) c
