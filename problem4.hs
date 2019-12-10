@@ -24,5 +24,5 @@ applyCommutative xmin xmax = if xmin <= xmax
 
 main = do    
     let c1 = applyCommutative smallest_factor biggest_factor
-    let c2 = filter (\x -> isPalindrome $ head x) c1
+    let c2 = filter (isPalindrome . head) c1
     putStrLn $ show $ maximumBy (comparing head) c2
