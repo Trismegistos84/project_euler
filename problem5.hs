@@ -1,3 +1,7 @@
 -- 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
 -- What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
--- 9  11   12   13   14   15   16   17   18   19   20
+-- without divisors: 9  11   12   13   14   15   16   17   18   19   20
+-- primes: 3, 5, 7; 11, 13, 17, 19
+-- lcm(cop1, cop2) == cop1*cop2
+-- prod(primes) = 4 849 845
+-- prod(without divisors) = 6 033 983 155 200
