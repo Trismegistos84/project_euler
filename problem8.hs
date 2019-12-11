@@ -7,10 +7,11 @@ number = [7, 3, 1, 6, 7, 1, 7, 6, 5, 3, 1, 3, 3, 0, 6, 2, 4, 9, 1, 9, 2, 2, 5, 1
 putLn x = (putStrLn . show) x
 
 findMaxProd max [] = max
-findMaxProd max number = if prod > fst max
-                         then findMaxProd (prod, take 13 number) (tail number)
-                         else findMaxProd max (tail number)
-                    where prod = foldl (*) 1 (take 13 number)
+findMaxProd max number = let prod = foldl (*) 1 (take 13 number)
+                             newmax = if prod > fst max
+                                      then (prod, take 13 number)
+                                      else max
+                         in findMaxProd newmax (tail number)                    
 
 
 main = do
