@@ -26,7 +26,7 @@ lengths = {1:1}
 for i in range(2, max_starting_number + 1):
     collatz(i, lengths)
 
-max_index, max_value = max(enumerate(lengths), key=lambda p: p[1])
+max_index, max_value = max(lengths.items(), key=lambda a: a[1])
 print "index:", max_index
 print "value:", max_value
 print "number of times collats function was evaluated:", len(lengths)
