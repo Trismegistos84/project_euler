@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 # n -> n/2 (n is even)
 # n -> 3n + 1 (n is odd)
 # Which starting number, under one million, produces the longest chain?
@@ -10,17 +11,8 @@ def succ(n):
         return 3*n + 1
 
 
-def get(l, n):
-    if n < len(l):
-        return l[n]
-    else:        
-        new_length = n - len(l) + 1
-        l += [-1] * new_length
-        return -1
-
-
 def collatz(n, lengths):
-    l = get(lengths, n)
+    l = lengths.get(n, -1)
     if l == -1:
         lengths[n] = collatz(succ(n), lengths) + 1
         return lengths[n]
@@ -28,17 +20,13 @@ def collatz(n, lengths):
         return l
 
 
-max_starting_number = 1000000
+max_starting_number = 1000000 - 1
+lengths = {1:1}
 
-lengths = [-1] * max_starting_number
-lengths[0] = 0
-lengths[1] = 1
-
-
-for i in range(2, max_starting_number):
+for i in range(2, max_starting_number + 1):
     collatz(i, lengths)
 
-
 max_index, max_value = max(enumerate(lengths), key=lambda p: p[1])
-print max_index
-print max_value
+print "index:", max_index
+print "value:", max_value
+print "number of times collats function was evaluated:", len(lengths)
