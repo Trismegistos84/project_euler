@@ -78,7 +78,7 @@ def create_ways_forward(amount):
 # is that it is testing only increasing solutions e.g.
 # (1, 2) but not (2, 1)
 def create_ways_increasing(amount):
-    remaining_ways = [(c, (c,)) for c in coins]
+    remaining_ways = [(c, (c,)) for c in coins if c <= amount]
     found_ways = []
 
     while len(remaining_ways) > 0:
