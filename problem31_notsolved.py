@@ -9,7 +9,6 @@
 
 
 coins = [1, 2, 5, 10, 20, 50, 100, 200]
-#ways = [1] + [0] * 200
 
 # This recursion is to deep to solve in sensible time
 # it will only work for small amount.
@@ -52,4 +51,26 @@ def create_ways_memo(amount, memo):
     return ways
  
 
-print(create_ways_memo(200, {}))
+# Non recursive version that test every solution.
+# Still to slow
+def create_ways_forward(amount):
+    remaining_ways = [(0, tuple())]
+    found_ways = set()
+
+    while len(remaining_ways) > 0:
+        way = remaining_ways.pop()
+        for coin in coins:
+            new_sum = way[0] + coin
+            if new_sum < amount:
+                new_decomposition = way[1] + (coin,)
+                remaining_ways.append((new_sum, new_decomposition))
+            elif new_sum == amount:
+                new_decomposition = tuple(sorted(way[1] + (coin,)))
+                found_ways.add(new_decomposition)
+    
+    return found_ways
+
+
+ways = create_ways_forward(5)
+print(len(ways))
+print(ways)
