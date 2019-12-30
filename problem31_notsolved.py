@@ -27,7 +27,7 @@ def create_ways(amount):
             ways.update(new_ways)
 
     return ways
-            
+
 
 # Version with memoization still to slow
 def create_ways_memo(amount, memo):
@@ -71,6 +71,29 @@ def create_ways_forward(amount):
     return found_ways
 
 
-ways = create_ways_forward(5)
-print(len(ways))
-print(ways)
+# Non recursive version that test every solution.
+# Still to slow
+def create_ways_increasing(amount):
+    remaining_ways = [(0, (0,))]
+    found_ways = []
+
+    while len(remaining_ways) > 0:
+        way = remaining_ways.pop()
+        last_coin = way[1][-1]
+        for coin in (c for c in coins if c >= last_coin):
+            new_sum = way[0] + coin
+            if new_sum < amount:
+                new_decomposition = way[1] + (coin,)
+                remaining_ways.append((new_sum, new_decomposition))
+            elif new_sum == amount:
+                new_decomposition = way[1] + (coin,)
+                found_ways.append(new_decomposition)
+    
+    return found_ways    
+
+
+ways = create_ways_forward(3)
+print(f"{len(ways)}: {ways}")
+
+ways = create_ways_increasing(200)
+print(f"{len(ways)}")
