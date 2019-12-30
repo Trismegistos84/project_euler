@@ -9,14 +9,26 @@
 
 
 coins = [1, 2, 5, 10, 20, 50, 100, 200]
-ways = [1] + [0] * 200
+#ways = [1] + [0] * 200
 
-for i in range(1, len(ways)):
+# This recursion is to deep to solve in sensible time
+# it will only work for small amount.
+def create_ways(amount):
+    ways = set()
+
+    if amount in coins:
+        ways.add((amount,))
+
     for coin in coins:
-        if i - coin >= 0:
-            ways[i] += ways[i - coin] 
+        previous_amount = amount - coin
+
+        if previous_amount > 0:
+            previous_ways = create_ways(previous_amount)
+            new_ways = {tuple(sorted(way + (coin,))) for way in previous_ways}
+            ways.update(new_ways)
+
+    return ways
+            
 
 
-print(ways)
-
-    
+print(create_ways(5))
