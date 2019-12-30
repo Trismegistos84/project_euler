@@ -30,5 +30,26 @@ def create_ways(amount):
     return ways
             
 
+# Version with memoization still to slow
+def create_ways_memo(amount, memo):
+    if amount in memo:
+        return memo[amount]
 
-print(create_ways(5))
+    ways = set()
+
+    if amount in coins:
+        ways.add((amount,))
+
+    for coin in coins:
+        previous_amount = amount - coin
+
+        if previous_amount > 0:
+            previous_ways = create_ways(previous_amount)
+            new_ways = {tuple(sorted(way + (coin,))) for way in previous_ways}
+            ways.update(new_ways)
+
+    memo[amount] = ways
+    return ways
+ 
+
+print(create_ways_memo(200, {}))
