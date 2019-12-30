@@ -72,27 +72,27 @@ def create_ways_forward(amount):
 
 
 # Non recursive version that test every solution.
-# Still to slow
+# list coins must be sorted
 def create_ways_increasing(amount):
-    remaining_ways = [(0, (0,))]
+    remaining_ways = [(c, (c,)) for c in coins]
     found_ways = []
 
     while len(remaining_ways) > 0:
         way = remaining_ways.pop()
-        last_coin = way[1][-1]
-        for coin in (c for c in coins if c >= last_coin):
-            new_sum = way[0] + coin
+        last_coin_idx = coins.index(way[1][-1])
+        for i in range(last_coin_idx, len(coins)):
+            new_sum = way[0] + coins[i]
             if new_sum < amount:
-                new_decomposition = way[1] + (coin,)
+                new_decomposition = way[1] + (coins[i],)
                 remaining_ways.append((new_sum, new_decomposition))
             elif new_sum == amount:
-                new_decomposition = way[1] + (coin,)
+                new_decomposition = way[1] + (coins[i],)
                 found_ways.append(new_decomposition)
     
-    return found_ways    
+    return found_ways
 
 
-ways = create_ways_forward(3)
+ways = create_ways_forward(6)
 print(f"{len(ways)}: {ways}")
 
 ways = create_ways_increasing(200)
