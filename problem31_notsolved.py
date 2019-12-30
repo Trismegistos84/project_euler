@@ -72,7 +72,11 @@ def create_ways_forward(amount):
 
 
 # Non recursive version that test every solution.
-# list coins must be sorted
+# list coins must be sorted. It manages to calculate
+# ways of giving change of 2 pounds in few seconds.
+# it is based on create_ways_forward. Crucrial change
+# is that it is testing only increasing solutions e.g.
+# (1, 2) but not (2, 1)
 def create_ways_increasing(amount):
     remaining_ways = [(c, (c,)) for c in coins]
     found_ways = []
